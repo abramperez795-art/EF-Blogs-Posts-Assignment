@@ -79,3 +79,14 @@ bool TryAddBlog(string? nameToAdd)
     db.AddBlog(blogToAdd);
     return true;
 }
+
+void AddBlog()
+{
+    Console.Write("Enter a name for the new blog: ");
+    string? newName = Console.ReadLine();
+
+    if (TryAddBlog(newName))
+        Console.WriteLine($"Blog '{newName}' added successfully.");
+    else
+        Console.WriteLine("Blog name cannot be empty.");
+}
