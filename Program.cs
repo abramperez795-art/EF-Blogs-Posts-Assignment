@@ -110,21 +110,41 @@ void CreatePost()
         Console.WriteLine("Invalid blog ID entered.");
         return;
     }
-var selectedBlog = blogs[blogChoice - 1];
+    var selectedBlog = blogs[blogChoice - 1];
 
-Console.Write("Enter post title: ");
-var title = Console.ReadLine();
+    Console.Write("Enter post title: ");
+    var title = Console.ReadLine();
     if (string.IsNullOrWhiteSpace(title))
     {
         Console.WriteLine("Title cannot be empty.");
         return;
     }
-  Console.Write("Enter post content: ");
+    Console.Write("Enter post content: ");
     var content = Console.ReadLine();
-  
-  var post = new Post { Title = title, Content = content, BlogId = selectedBlog.BlogId };
+
+    var post = new Post { Title = title, Content = content, BlogId = selectedBlog.BlogId };
     db.Posts.Add(post);
     db.SaveChanges();
-    
+
     Console.WriteLine("Post added successfully.");
+}
+
+Dictionary<string, List<Post>> GetPostsByBlog(out bool success)
+{
+    var blogs = db.Blogs.OrderBy(b => b.Name).ToList();
+
+    success = true;
+    if (!blogs.Any())
+    {
+        success = false;
+        return new Dictionary<string, List<Post>>();
+    }
+
+    var result = new Dictionary<string, List<Post>>();
+    foreach (var blog in blogs)
+    {
+        var posts = db.Posts.Where(p => p.BlogId == blog.BlogId).ToList();
+        result[blog.Name] = posts;
+    }
+    return result;
 }
