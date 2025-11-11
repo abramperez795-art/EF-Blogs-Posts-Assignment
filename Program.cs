@@ -148,3 +148,26 @@ Dictionary<string, List<Post>> GetPostsByBlog(out bool success)
     }
     return result;
 }
+
+void DisplayPosts()
+{
+    var postsByBlog = GetPostsByBlog(out bool hasBlogs);
+    if (!hasBlogs)
+    {
+        Console.WriteLine("No blogs available.");
+        return;
+    }
+
+  var blogNames = postsByBlog.Keys.ToList();
+    Console.WriteLine("Select a blog to view its posts:");
+    for (int i = 0; i < blogNames.Count; i++)
+        Console.WriteLine($"{i + 1}. {blogNames[i]}");
+
+    if (!int.TryParse(Console.ReadLine(), out int choice) || choice < 1 || choice > blogNames.Count)
+    {
+        Console.WriteLine("Invalid selection.");
+        return;
+    }
+
+
+}
