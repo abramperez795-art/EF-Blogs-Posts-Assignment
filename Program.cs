@@ -24,11 +24,26 @@ while (true)
         Console.WriteLine("Exiting program...");
         break;
     }
-    
-       if (!int.TryParse(input, out int selection) || selection < 1 || selection > 4)
+
+    if (!int.TryParse(input, out int selection) || selection < 1 || selection > 4)
     {
         Console.WriteLine("Error Invalid selection. Please try again.");
         continue;
+    }
+     switch (selection)
+    {
+        case 1:
+            DisplayAllBlogs();
+            break;
+        case 2:
+            AddBlog();
+            break;
+        case 3:
+            CreatePost();
+            break;
+        case 4:
+            DisplayPosts();
+            break;
     }
 
 }
