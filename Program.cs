@@ -158,7 +158,7 @@ void DisplayPosts()
         return;
     }
 
-  var blogNames = postsByBlog.Keys.ToList();
+    var blogNames = postsByBlog.Keys.ToList();
     Console.WriteLine("Select a blog to view its posts:");
     for (int i = 0; i < blogNames.Count; i++)
         Console.WriteLine($"{i + 1}. {blogNames[i]}");
@@ -169,5 +169,18 @@ void DisplayPosts()
         return;
     }
 
+    string selectedBlog = blogNames[choice - 1];
+    var posts = postsByBlog[selectedBlog];
 
+    Console.WriteLine($"\nBlog: {selectedBlog} - Number of Posts: {posts.Count}");
+    if (!posts.Any())
+        Console.WriteLine("No posts found for this blog.");
+    else
+    {
+        foreach (var post in posts)
+        {
+            Console.WriteLine($"Post from: {post.Title}");
+            Console.WriteLine($"Content: {post.Content}\n");
+        }
+    }
 }
