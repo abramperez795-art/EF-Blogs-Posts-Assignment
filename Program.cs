@@ -69,3 +69,13 @@ void DisplayAllBlogs()
             Console.WriteLine($"- {n}");
     }
 }
+
+bool TryAddBlog(string? nameToAdd)
+{
+    if (string.IsNullOrWhiteSpace(nameToAdd))
+        return false;
+
+    var blogToAdd = new Blog { Name = nameToAdd };
+    db.AddBlog(blogToAdd);
+    return true;
+}
