@@ -56,3 +56,16 @@ List<string> GetAllBlogNames()
         return new List<string>();
     return blogs.Select(b => b.Name).ToList();
 }
+
+void DisplayAllBlogs()
+{
+    var names = GetAllBlogNames();
+    if (!names.Any())
+        Console.WriteLine("No blogs found.");
+    else
+    {
+        Console.WriteLine("\nAll blogs in the database:");
+        foreach (var n in names)
+            Console.WriteLine($"- {n}");
+    }
+}
