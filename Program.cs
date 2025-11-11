@@ -48,3 +48,11 @@ while (true)
 
 }
 logger.Info("Program ended");
+
+List<string> GetAllBlogNames()
+{
+    var blogs = db.Blogs.OrderBy(b => b.Name).ToList();
+    if (!blogs.Any())
+        return new List<string>();
+    return blogs.Select(b => b.Name).ToList();
+}
