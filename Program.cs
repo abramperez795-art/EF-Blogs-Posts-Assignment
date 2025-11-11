@@ -30,7 +30,7 @@ while (true)
         Console.WriteLine("Error Invalid selection. Please try again.");
         continue;
     }
-     switch (selection)
+    switch (selection)
     {
         case 1:
             DisplayAllBlogs();
@@ -89,4 +89,42 @@ void AddBlog()
         Console.WriteLine($"Blog '{newName}' added successfully.");
     else
         Console.WriteLine("Blog name cannot be empty.");
+}
+
+void CreatePost()
+{
+    var blogs = db.Blogs.OrderBy(b => b.Name).ToList();
+
+    if (!blogs.Any())
+    {
+        Console.WriteLine("No blogs available.");
+        return;
+    }
+
+    Console.WriteLine("Select the blog to post to:");
+    for (int i = 0; i < blogs.Count; i++)
+        Console.WriteLine($"{i + 1}. {blogs[i].Name}");
+    string blogInput = Console.ReadLine();
+    if (!int.TryParse(blogInput, out int blogChoice) || blogChoice < 1 || blogChoice > blogs.Count)
+    {
+        Console.WriteLine("Invalid blog ID entered.");
+        return;
+    }
+var selectedBlog = blogs[blogChoice - 1];
+
+Console.Write("Enter post title: ");
+var title = Console.ReadLine();
+    if (string.IsNullOrWhiteSpace(title))
+    {
+        Console.WriteLine("Title cannot be empty.");
+        return;
+    }
+  Console.Write("Enter post content: ");
+    var content = Console.ReadLine();
+  
+  var post = new Post { Title = title, Content = content, BlogId = selectedBlog.BlogId };
+    db.Posts.Add(post);
+    db.SaveChanges();
+    
+    Console.WriteLine("Post added successfully.");
 }
